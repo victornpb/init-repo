@@ -1,24 +1,22 @@
 {
-  "name": "foo-bar",
-  "nameFull": "FooBar",
+  "name": "init-repo",
   "version": "0.0.0",
-  "description": "A foo-bar library",
+  "description": "A init-repo library",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/username/foo-bar.git"
+    "url": "git+https://github.com/victornpb/init-repo.git"
   },
   "bugs": {
-    "url": "https://github.com/username/foo-bar/issues"
+    "url": "https://github.com/victornpb/init-repo/issues"
   },
-  "homepage": "https://github.com/username/foo-bar",
-  "author": "username",
-  "main": "dist/foo-bar.cjs.js",
-  "module": "dist/foo-bar.esm.js",
-  "unpkg": "dist/foo-bar.js",
+  "homepage": "https://github.com/victornpb/init-repo",
+  "author": "victornpb",
+  "main": "dist/init-repo.cjs.js",
+  "module": "dist/init-repo.mjs",
   "globalVar": "FooBar",
   "scripts": {
     "start": "rollup -c -w",
@@ -51,6 +49,7 @@
     "@babel/plugin-transform-runtime": "^7.12.17",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.17",
+    "@rollup/plugin-json": "^4.1.0",
     "babel-plugin-array-includes": "^2.0.3",
     "eslint": "^7.20.0",
     "husky": "^5.1.0",
@@ -64,7 +63,6 @@
     "rollup-plugin-banner2": "^1.0.2",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "tiny-dedent": "^1.0.1"
   },
@@ -78,5 +76,8 @@
       "npm run lint:fix",
       "git add"
     ]
+  },
+  "bin": {
+    "init-repo": "./dist/init-repo.cjs.js"
   }
 }

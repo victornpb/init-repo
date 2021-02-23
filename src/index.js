@@ -13,7 +13,7 @@ async function main() {
 
     let list;
     try {
-        list = require('./.repo.config.js');
+        list = eval(`require('./.repo.config.js')`);
     } catch (err) {
         console.error('Not found!');
         // TODO: ask to download a template instead

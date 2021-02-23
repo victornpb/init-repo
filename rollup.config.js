@@ -1,7 +1,8 @@
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import { terser } from 'rollup-plugin-terser';
+import json from '@rollup/plugin-json';
+// import { terser } from 'rollup-plugin-terser';
 import banner from 'rollup-plugin-banner2';
 import S from 'tiny-dedent';
 import packageJson from './package.json';
@@ -25,116 +26,32 @@ export default [
     input: './src/index.js',
     output: [
       {
-        file: packageJson.module.replace('.js', '.mjs'),
+        file: packageJson.module,
         format: 'esm',
-        sourcemap: false,
+        sourcemap: sourcemap,
+        exports: 'default',
       },
-    ],
-    plugins: [
-      resolve(),
-      commonjs(),
-      babel({
-        plugins: [
-          '@babel/plugin-proposal-class-properties',
-          '@babel/plugin-proposal-private-methods'
-        ]
-      }),
-      banner(license)
-    ]
-  },
-
-  // CJS and ESM (preset-env)
-  {
-    input: './src/index.js',
-    output: [
       {
         file: packageJson.main,
         format: 'cjs',
-        sourcemap
-      },
-      {
-        file: packageJson.module,
-        format: 'esm',
-        sourcemap
+        sourcemap: sourcemap,
+        exports: 'default',
       },
     ],
+    external: ['fast-glob', 'inquirer'],
     plugins: [
-      resolve(),
+      resolve({
+        preferBuiltins: true,
+      }),
+      commonjs(),
+      json(),
       babel({
-        exclude: 'node_modules/**',
-        presets: [
-          [
-            '@babel/env',
-            {
-              modules: 'auto',
-              targets: {
-                browsers: '> 1%, IE 11, not op_mini all, not dead',
-                node: 8
-              },
-              useBuiltIns: 'usage',
-              corejs: 3,
-            }
-          ]
-        ],
         plugins: [
           '@babel/plugin-proposal-class-properties',
           '@babel/plugin-proposal-private-methods'
-        ]
+        ],
       }),
-      commonjs(),
-      // production &&
-      // terser({
-      //   output: {
-      //     // compress: false,
-      //     // mangle: false,
-
-      //   }
-      // }),
       banner(license)
     ]
   },
-
-  // Legacy UMD (preset-env)
-  {
-    input: './src/index.js',
-    output: [
-      {
-        name: packageJson.globalVar,
-        file: packageJson.unpkg,
-        format: 'umd',
-        sourcemap
-      }
-    ],
-    plugins: [
-      resolve(),
-      babel({
-        exclude: 'node_modules/**',
-        presets: [
-          [
-            '@babel/env',
-            {
-              modules: 'auto',
-              targets: {
-                browsers: '> 1%, IE 11, not op_mini all, not dead',
-                node: 8
-              },
-              useBuiltIns: 'usage',
-              corejs: 3,
-            }
-          ]
-        ],
-        plugins: [
-          '@babel/plugin-proposal-class-properties',
-          '@babel/plugin-proposal-private-methods'
-        ]
-      }),
-      commonjs(),
-      production &&
-      terser({
-        output: {}
-      }),
-      banner(license)
-    ]
-  }
-
 ];
