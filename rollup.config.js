@@ -8,6 +8,8 @@ import S from 'tiny-dedent';
 import packageJson from './package.json';
 
 const license = () => S(`
+  #!/usr/bin/env node
+  
   /*!
    * ${packageJson.nameFull} v${packageJson.version} (${packageJson.homepage})
    * Copyright (c) ${packageJson.author}
@@ -26,16 +28,10 @@ export default [
     input: './src/index.js',
     output: [
       {
-        file: packageJson.module,
-        format: 'esm',
-        sourcemap: sourcemap,
-        exports: 'default',
-      },
-      {
         file: packageJson.main,
-        format: 'cjs',
+        format: 'iife',
         sourcemap: sourcemap,
-        exports: 'default',
+        // exports: 'default',
       },
     ],
     external: ['fast-glob', 'inquirer'],
@@ -51,7 +47,7 @@ export default [
           '@babel/plugin-proposal-private-methods'
         ],
       }),
-      banner(license)
+      banner(license),
     ]
   },
 ];

@@ -15,8 +15,7 @@
   },
   "homepage": "https://github.com/victornpb/init-repo",
   "author": "victornpb",
-  "main": "dist/init-repo.cjs.js",
-  "module": "dist/init-repo.mjs",
+  "main": "dist/init-repo.js",
   "globalVar": "FooBar",
   "scripts": {
     "start": "rollup -c -w",
@@ -78,6 +77,6 @@
     ]
   },
   "bin": {
-    "init-repo": "./dist/init-repo.cjs.js"
+    "init-repo": "./src/index.js"
   }
 }
